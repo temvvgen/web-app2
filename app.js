@@ -1,25 +1,32 @@
 // delgetstei ajillah controller
-var uiController = (function () {})();
+var uiController = (function () {
+  return {
+    getInput: function () {
+      return {
+        type: document.querySelector(".add__type").value,
+        describtion: document.querySelector(".add__description").value,
+        money: document.querySelector(".add__value").value,
+      };
+    },
+  };
+})();
 
 // sanhvvtei ajillah controller
 var financeController = (function () {})();
 
 // programmiig holboh controller
 var appController = (function (uiController, financeController) {
-  //towchtoi bolon cursort ogodol damjuulah func
-  var addItem = function () {
-    console.log("ogodol oruulla");
+  var addController = function () {
+    console.log(uiController.getInput());
   };
 
-  //towch deer darhad addItem ajillah func
   document.querySelector(".add__btn").addEventListener("click", function () {
-    addItem();
+    addController();
   });
 
-  //enter darhad addItem ajillah func
   document.addEventListener("keypress", function () {
-    if (event.keyCode === 13 || event.which === 13) {
-      addItem();
+    if (event.keyCode === 13) {
+      addController();
     }
   });
 })(uiController, financeController);
