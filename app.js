@@ -1,32 +1,44 @@
-// delgetstei ajillah controller
+//delgetstei ajillah controller
 var uiController = (function () {
   return {
-    getInput: function () {
+    getInfo: function () {
       return {
         type: document.querySelector(".add__type").value,
-        describtion: document.querySelector(".add__description").value,
-        money: document.querySelector(".add__value").value,
+        description: document.querySelector(".add__description").value,
+        value: document.querySelector(".add__value").value,
       };
     },
   };
 })();
 
-// sanhvvtei ajillah controller
+//sanhvvtei ajillah controller
 var financeController = (function () {})();
 
-// programmiig holboh controller
+//programmiig holboh controller
 var appController = (function (uiController, financeController) {
   var addController = function () {
-    console.log(uiController.getInput());
+    var info = uiController.getInfo();
+    console.log(info);
   };
 
-  document.querySelector(".add__btn").addEventListener("click", function () {
-    addController();
-  });
-
-  document.addEventListener("keypress", function () {
-    if (event.keyCode === 13) {
+  var setupEventListener = function () {
+    document.querySelector(".add__btn").addEventListener("click", function () {
       addController();
-    }
-  });
+    });
+
+    document.addEventListener("keypress", function () {
+      if (event.keyCode === 13 || event.which === 13) {
+        addController();
+      }
+    });
+  };
+
+  return {
+    init: function () {
+      console.log("app started");
+      setupEventListener();
+    },
+  };
 })(uiController, financeController);
+
+appController.init();
