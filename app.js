@@ -9,6 +9,20 @@ var uiController = (function () {
       };
     },
 
+    clearFields: function () {
+      var fields = document.querySelectorAll(".add__description, .add__value");
+
+      var fieldsArr = Array.prototype.slice.call(fields);
+      fieldsArr.forEach(function (el, index, array) {
+        el.value = "";
+      });
+
+      fieldsArr[0].focus;
+      // for (var i = 0; i < fieldsArr.length; i++) {
+      //   fieldsArr[i].value = "";
+      // }
+    },
+
     addListItem: function (item, type) {
       var html, list;
       if (type === "inc") {
@@ -87,6 +101,7 @@ var appController = (function (uiController, financeController) {
     );
 
     uiController.addListItem(item, info.type);
+    uiController.clearFields();
   };
 
   var setupEventListener = function () {
