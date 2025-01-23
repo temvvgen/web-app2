@@ -5,7 +5,7 @@ var uiController = (function () {
       return {
         type: document.querySelector(".add__type").value,
         description: document.querySelector(".add__description").value,
-        value: document.querySelector(".add__value").value,
+        value: parseInt(document.querySelector(".add__value").value),
       };
     },
 
@@ -17,7 +17,9 @@ var uiController = (function () {
         el.value = "";
       });
 
-      fieldsArr[0].focus;
+      if (fieldsArr.length > 0) {
+        fieldsArr[0].focus();
+      }
       // for (var i = 0; i < fieldsArr.length; i++) {
       //   fieldsArr[i].value = "";
       // }
@@ -57,6 +59,15 @@ var financeController = (function () {
     this.value = value;
   };
 
+  var calculateTotal = function (type) {
+    var sum = 0;
+    data.items[type].forEach(function (el) {
+      sum = sum + el.value;
+    });
+
+    data.totals[type] = sum;
+  };
+
   var data = {
     items: {
       inc: [],
@@ -67,9 +78,27 @@ var financeController = (function () {
       inc: 0,
       exp: 0,
     },
+
+    tosow: 0,
+    huwi: 0,
   };
 
   return {
+    tosowTootsooloh: function () {
+      calculateTotal("inc");
+      calculateTotal("exp");
+
+      data.tosow = data.totals.inc - data.totals.exp;
+      data.huwi = Math.round((data.totals.exp / data.totals.inc) * 100);
+    },
+    toswiigAwah: function () {
+      return {
+        tosow: data.tosow,
+        huwi: data.huwi,
+        totalInc: data.totals.inc,
+        totalExp: data.totals.exp,
+      };
+    },
     addItem: function (type, desc, val) {
       var item, id;
 
@@ -94,14 +123,22 @@ var financeController = (function () {
 var appController = (function (uiController, financeController) {
   var addController = function () {
     var info = uiController.getInfo();
-    var item = financeController.addItem(
-      info.type,
-      info.description,
-      info.value
-    );
+    if (info.description !== "" && info.value !== "") {
+      var item = financeController.addItem(
+        info.type,
+        info.description,
+        info.value
+      );
 
-    uiController.addListItem(item, info.type);
-    uiController.clearFields();
+      uiController.addListItem(item, info.type);
+      uiController.clearFields();
+
+      financeController.tosowTootsooloh();
+
+      var tosow = financeController.toswiigAwah();
+
+      console.log(tosow);
+    }
   };
 
   var setupEventListener = function () {
