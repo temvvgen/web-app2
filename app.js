@@ -25,6 +25,21 @@ var uiController = (function () {
       // }
     },
 
+    toswiigVzvvleh: function (tosow) {
+      document.querySelector(".budget__value").textContent = tosow.tosow;
+      document.querySelector(".budget__income--value").textContent =
+        tosow.totalInc;
+      document.querySelector(".budget__expenses--value").textContent =
+        tosow.totalExp;
+      if (tosow.huwi !== 0) {
+        document.querySelector(".budget__expenses--percentage").textContent =
+          tosow.huwi + "%";
+      } else {
+        document.querySelector(".budget__expenses--percentage").textContent =
+          tosow.huwi;
+      }
+    },
+
     addListItem: function (item, type) {
       var html, list;
       if (type === "inc") {
@@ -137,7 +152,7 @@ var appController = (function (uiController, financeController) {
 
       var tosow = financeController.toswiigAwah();
 
-      console.log(tosow);
+      uiController.toswiigVzvvleh(tosow);
     }
   };
 
@@ -156,6 +171,12 @@ var appController = (function (uiController, financeController) {
   return {
     init: function () {
       console.log("app started");
+      uiController.toswiigVzvvleh({
+        tosow: 0,
+        huwi: 0,
+        totalInc: 0,
+        totalExp: 0,
+      });
       setupEventListener();
     },
   };
